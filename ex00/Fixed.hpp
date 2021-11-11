@@ -6,7 +6,7 @@
 /*   By: ioleinik <ioleinik@students.42wolfsburg.de +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 22:36:15 by ioleinik          #+#    #+#             */
-/*   Updated: 2021/11/11 22:39:21 by ioleinik         ###   ########.fr       */
+/*   Updated: 2021/11/11 22:55:48 by ioleinik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ public:
 	Fixed(const Fixed &fixed);
 	~Fixed();
 
-	Fixed &operator=(Fixed const &oper);
+	Fixed &operator=(Fixed const &dup);
 	int getRawBits(void) const;
 	void setRawBits(int const raw);
 

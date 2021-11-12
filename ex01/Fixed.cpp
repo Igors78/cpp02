@@ -6,7 +6,7 @@
 /*   By: ioleinik <ioleinik@students.42wolfsburg.de +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 22:36:10 by ioleinik          #+#    #+#             */
-/*   Updated: 2021/11/11 22:47:02 by ioleinik         ###   ########.fr       */
+/*   Updated: 2021/11/12 10:04:31 by ioleinik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ Fixed::Fixed() : _point(0)
 	std::cout << "Default constructor called" << std::endl;
 }
 
-Fixed::Fixed(const Fixed &fixed)
+Fixed::Fixed(Fixed const &source)
 {
 	std::cout << "Copy constructor called" << std::endl;
-	this->_point = fixed.getRawBits();
+	*this = source;
 }
 
 Fixed::~Fixed()
@@ -30,18 +30,46 @@ Fixed::~Fixed()
 
 int Fixed::getRawBits() const
 {
-	std::cout << "getRawBits member function called" << std::endl;
 	return (this->_point);
 }
 
-Fixed &Fixed::operator=(Fixed const &dup)
+Fixed &Fixed::operator=(Fixed const &right)
 {
 	std::cout << "Assignation operator called" << std::endl;
-	this->_point = dup.getRawBits();
+	if (this != &right)
+		this->_point = right.getRawBits();
 	return (*this);
 }
 
 void Fixed::setRawBits(int const rawbits)
 {
 	this->_point = rawbits;
+}
+
+Fixed::Fixed(float num)
+{
+	_point = roundf(num * (1 << _fractbits));
+	std::cout << "Float constructor called" << std::endl;
+}
+
+Fixed::Fixed(int num)
+{
+	_point = num << _fractbits;
+	std::cout << "Int constructor called" << std::endl;
+}
+
+float Fixed::toFloat() const
+{
+	return ((float)_point / (float)(1 << _fractbits));
+}
+
+int Fixed::toInt() const
+{
+	return (int)this->toFloat();
+}
+
+std::ostream &operator<<(std::ostream &out, Fixed const &in)
+{
+	out << in.toFloat();
+	return (out);
 }
